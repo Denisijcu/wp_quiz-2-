@@ -15,14 +15,29 @@ Author URI: http://dleyva@techlaunch.io/
 
 
 
+
+function user_greeting_option_page(){
+    if(!current_user_can( 'manage_options')){
+        wp_die('you do not have sufficient permissions to access this page.');
+    }
+   
+}
+
+
+add_action( 'admin_menu', 'register_be_nice_with_user' );
+function register_be_nice_with_user() {
+  // add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+  add_menu_page( 'Be Nice with the User Title', 'Be Nice with the User', 'manage_options', 'widgets.php', '', 'dashicons-welcome-widgets-menus', 90 );
+}
+
+
+
 /* Register User_greeting_widget */
 
-add_action('widgets_init', function(){
-    register_widget('Greeting_User_Widget');
+    add_action('widgets_init', function(){
+       register_widget('Greeting_User_Widget');
     });
 
-
-//add_action( 'admin_head', 'Greeting_User_Widget' );
 
 /**
  * Adds Greeting_User_Widget widget.
@@ -95,7 +110,7 @@ class Greeting_User_Widget extends WP_Widget {
 		return $instance;
 	}
 
-} // class Foo_Widget
+}
 
 
 
